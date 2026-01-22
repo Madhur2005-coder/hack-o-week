@@ -1,0 +1,101 @@
+@@ -0,0 +1,101 @@
+import java.util.*;
+
+public class TextPreprocessing {
+
+    // Stopwords list
+    private static final Set<String> STOPWORDS = new HashSet<>(Arrays.asList(
+            "i", "me", "my", "you", "your", "is", "am", "are",
+            "the", "a", "an", "and", "or", "to", "of", "in",
+            "on", "for", "with", "how", "can", "do"
+    ));
+
+    // Basic spelling normalization map
+    private static final Map<String, String> SPELLING_MAP = new HashMap<>();
+
+    static {
+        SPELLING_MAP.put("hii", "hi");
+        SPELLING_MAP.put("hiii", "hi");
+        SPELLING_MAP.put("helo", "hello");
+        SPELLING_MAP.put("helloo", "hello");
+        SPELLING_MAP.put("pls", "please");
+        SPELLING_MAP.put("plz", "please");
+        SPELLING_MAP.put("thanx", "thanks");
+        SPELLING_MAP.put("thx", "thanks");
+        SPELLING_MAP.put("imporve", "improve");
+        SPELLING_MAP.put("improove", "improve");
+        SPELLING_MAP.put("skillss", "skills");
+        SPELLING_MAP.put("skillsss", "skills");
+        SPELLING_MAP.put("dsaaa", "dsa");
+        SPELLING_MAP.put("algos", "algorithms");
+        SPELLING_MAP.put("bcoz", "because");
+        SPELLING_MAP.put("cuz", "because");
+        SPELLING_MAP.put("wht", "what");
+        SPELLING_MAP.put("wat", "what");
+        SPELLING_MAP.put("hw", "homework");
+        SPELLING_MAP.put("examms", "exam");
+        SPELLING_MAP.put("prob", "problem");
+        SPELLING_MAP.put("prblm", "problem");
+        SPELLING_MAP.put("prog", "program");
+        SPELLING_MAP.put("func", "function");
+        SPELLING_MAP.put("var", "variable");
+        SPELLING_MAP.put("loopss", "loop");
+    }
+
+    // Normalize repeated characters (e.g. skillsss → skills)
+    private static String normalizeRepeatedChars(String word) {
+        return word.replaceAll("(.)\\1{2,}", "$1$1");
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        //  Take user input
+        System.out.println("Enter the student question:");
+        String input = scanner.nextLine();
+
+        System.out.println("\nOriginal Input:");
+        System.out.println(input);
+
+        // 2. Lowercasing
+        String lowerCaseText = input.toLowerCase();
+        System.out.println("\nAfter Lowercasing:");
+        System.out.println(lowerCaseText);
+
+        // 3. Punctuation handling
+        String noPunctuationText = lowerCaseText.replaceAll("[^a-z0-9\\s]", "");
+        System.out.println("\nAfter Removing Punctuation:");
+        System.out.println(noPunctuationText);
+
+        // 4. Tokenization
+        String[] tokens = noPunctuationText.split("\\s+");
+        System.out.println("\nAfter Tokenization:");
+        System.out.println(Arrays.toString(tokens));
+
+        //  Stopword removal + spelling normalization
+        List<String> finalTokens = new ArrayList<>();
+
+        for (String token : tokens) {
+
+            if (STOPWORDS.contains(token)) {
+                continue;
+            }
+
+            // Normalize repeated characters
+            token = normalizeRepeatedChars(token);
+
+            // Spelling normalization
+            if (SPELLING_MAP.containsKey(token)) {
+                token = SPELLING_MAP.get(token);
+            }
+
+            finalTokens.add(token);
+        }
+
+
+        System.out.println("\nAfter Stopword Removal and Spelling Normalization:");
+        System.out.println(finalTokens);
+
+        scanner.close();
+    }
