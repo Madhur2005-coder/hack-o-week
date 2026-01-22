@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Institute FAQ Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+        .chatbox {
+            width: 420px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        #chat {
+            height: 320px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .user {
+            color: blue;
+            margin: 5px 0;
+        }
+        .bot {
+            color: green;
+            margin: 5px 0;
+        }
+        input {
+            width: 75%;
+            padding: 8px;
+        }
+        button {
+            padding: 8px;
+            width: 20%;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chatbox">
+    <h2>Institute FAQ Chatbot</h2>
+    <div id="chat"></div>
+
+    <input type="text" id="userInput" placeholder="Ask your question...">
+    <button onclick="chatbot()">Send</button>
+</div>
+
+<script>
+function chatbot() {
+    var input = document.getElementById("userInput").value.toLowerCase();
+    var chat = document.getElementById("chat");
+
+    chat.innerHTML += "<div class='user'><b>You:</b> " + input + "</div>";
+
+    var response = "";
+
+    if (input.includes("name")) {
+        response = "Our institute name is ABC Institute of Technology.";
+    }
+    else if (input.includes("timing") || input.includes("class time")) {
+        response = "Class timings are from 9:00 AM to 4:30 PM.";
+    }
+    else if (input.includes("lunch")) {
+        response = "Lunch break is from 1:00 PM to 1:45 PM.";
+    }
+    else if (input.includes("uniform")) {
+        response = "Yes, wearing the institute uniform is compulsory.";
+    }
+    else if (input.includes("exam")) {
+        response = "Examinations are conducted as per university schedule.";
+    }
+    else if (input.includes("holiday")) {
+        response = "Holidays are as per the academic calendar.";
+    }
+    else if (input.includes("day")) {
+        response = "The institute operates from Monday to Friday.";
+    }
+    else if (input.includes("attendance")) {
+        response = "Minimum 75% attendance is required.";
+    }
+    else if (input.includes("course")) {
+        response = "We offer BCA, MCA, B.Tech, and MBA courses.";
+    }
+    else if (input.includes("fee")) {
+        response = "Fees depend on the selected course. Please contact the office.";
+    }
+    else if (input.includes("admission")) {
+        response = "Admissions are based on merit and entrance exams.";
+    }
+    else if (input.includes("bus") || input.includes("transport")) {
+        response = "Yes, bus transport facility is available.";
+    }
+    else if (input.includes("placement")) {
+        response = "We provide placement assistance to final year students.";
+    }
+    else if (input.includes("hostel")) {
+        response = "Hostel facilities are available for both boys and girls.";
+    }
+    else if (input.includes("contact") || input.includes("phone")) {
+        response = "You can contact us at 9876543210.";
+    }
+    else if (input.includes("email")) {
+        response = "Our email ID is info@abcinstitute.edu";
+    }
+    else if (input.includes("address") || input.includes("location")) {
+        response = "We are located at Main Road, New Delhi.";
+    }
+    else if (input.includes("bye") || input.includes("exit")) {
+        response = "Thank you! Have a great day 😊";
+    }
+    else {
+        response = "Sorry, I don't understand your question.";
+    }
+
+    chat.innerHTML += "<div class='bot'><b>Bot:</b> " + response + "</div>";
+    document.getElementById("userInput").value = "";
+    chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>
