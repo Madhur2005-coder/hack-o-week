@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Institute FAQ Chatbot</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+        .chatbox {
+            width: 430px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px gray;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        #chat {
+            height: 330px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .user {
+            color: blue;
+            margin: 5px 0;
+        }
+        .bot {
+            color: green;
+            margin: 5px 0;
+        }
+        input {
+            width: 75%;
+            padding: 8px;
+        }
+        button {
+            padding: 8px;
+            width: 20%;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chatbox">
+    <h2>Institute FAQ Chatbot</h2>
+    <div id="chat"></div>
+
+    <input type="text" id="userInput" placeholder="Ask your question...">
+    <button onclick="chatbot()">Send</button>
+</div>
+
+<script>
+function chatbot() {
+    var input = document.getElementById("userInput").value.toLowerCase();
+    var chat = document.getElementById("chat");
+
+    chat.innerHTML += "<div class='user'><b>You:</b> " + input + "</div>";
+
+    // FAQ keyword groups (synonym dictionary)
+    var faq = [
+        {
+            keywords: ["name", "college name", "institute name"],
+            answer: "Our institute name is ABC Institute of Technology."
+        },
+        {
+            keywords: ["timing", "time", "class time", "hours"],
+            answer: "Class timings are from 9:00 AM to 4:30 PM."
+        },
+        {
+            keywords: ["fees", "fee", "tuition", "payment", "cost"],
+            answer: "The fee structure depends on the course. Please contact the office."
+        },
+        {
+            keywords: ["course", "courses", "program", "degree"],
+            answer: "We offer BCA, MCA, B.Tech, and MBA programs."
+        },
+        {
+            keywords: ["uniform", "dress", "dress code"],
+            answer: "Yes, wearing the institute uniform is compulsory."
+        },
+        {
+            keywords: ["lunch", "break", "recess"],
+            answer: "Lunch break is from 1:00 PM to 1:45 PM."
+        },
+        {
+            keywords: ["exam", "exams", "test", "assessment"],
+            answer: "Examinations are conducted as per the university schedule."
+        },
+        {
+            keywords: ["attendance", "presence", "minimum attendance"],
+            answer: "Minimum 75% attendance is mandatory."
+        },
+        {
+            keywords: ["holiday", "holidays", "vacation"],
+            answer: "Holidays are as per the academic calendar."
+        },
+        {
+            keywords: ["bus", "transport", "transportation"],
+            answer: "Yes, transport (bus) facility is available."
+        },
+        {
+            keywords: ["hostel", "accommodation", "residence"],
+            answer: "Hostel facilities are available for boys and girls."
+        },
+        {
+            keywords: ["placement", "job", "career"],
+            answer: "Placement assistance is provided to final-year students."
+        },
+        {
+            keywords: ["contact", "phone", "call"],
+            answer: "You can contact us at 9876543210."
+        },
+        {
+            keywords: ["email", "mail"],
+            answer: "Our email ID is info@abcinstitute.edu"
+        },
+        {
+            keywords: ["address", "location", "where"],
+            answer: "We are located at Main Road, New Delhi."
+        }
+    ];
+
+    var response = "Sorry, I don't understand your question.";
+
+    // Keyword-group pattern matching
+    for (var i = 0; i < faq.length; i++) {
+        for (var j = 0; j < faq[i].keywords.length; j++) {
+            if (input.includes(faq[i].keywords[j])) {
+                response = faq[i].answer;
+                break;
+            }
+        }
+        if (response !== "Sorry, I don't understand your question.") {
+            break;
+        }
+    }
+
+    chat.innerHTML += "<div class='bot'><b>Bot:</b> " + response + "</div>";
+    document.getElementById("userInput").value = "";
+    chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
+</body>
+</html>
