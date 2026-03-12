@@ -1,0 +1,40 @@
+#include <Wire.h>
+#include <LiquidCrystal.h>
+
+#define SLAVE_ADDRESS 8
+
+volatile int receivedNumber = 0;
+int lastShown = -1;
+
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
+void setup() {
+  Wire.begin(SLAVE_ADDRESS);
+  Wire.onReceive(receiveEvent);
+
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Door Status:");
+}
+
+void loop() {
+  if (receivedNumber != lastShown) {
+    lcd.setCursor(0,1);
+    lcd.print("                "); // clear line
+    lcd.setCursor(5,1);
+
+    if (receivedNumber == 1) lcd.print("OPEN");
+    else                     lcd.print("CLOSE");
+
+    lastShown = receivedNumber;
+  }
+  delay(50);
+}
+
+void receiveEvent(int howMany) {
+  while (Wire.available()) {
+    receivedNumber = Wire.read();
+  }
+}
